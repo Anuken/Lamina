@@ -221,6 +221,21 @@ proc showExportFile =
   if file != "":
     renderToFile(file)
 
+proc tryDeleteLayer =
+  if state.layers.len > 1:
+    state.layers.delete(state.selectedLayer)
+    state.selectedLayer = clamp(state.selectedLayer, 0, state.layers.len - 1)
+
+    canvasChanged()
+
+proc tryMoveLayer(dir: int, moveLayer: bool) =
+  if dir != 0 and state.selectedLayer + dir < state.layers.len and state.selectedLayer + dir >= 0:
+    
+    if moveLayer: 
+      swap(state.layers[state.selectedLayer], state.layers[state.selectedLayer + dir])
+      canvasChanged()
+    state.selectedLayer += dir
+
 proc doUi =
   var windowHeight = 0f
 
@@ -233,19 +248,12 @@ proc doUi =
         state.selectedLayer = i
     
     let dir = axisTap(keyDown, keyUp)
-    if dir != 0 and not shiftDown() and state.selectedLayer + dir < state.layers.len and state.selectedLayer + dir >= 0:
-      
-      if ctrlDown(): 
-        swap(state.layers[state.selectedLayer], state.layers[state.selectedLayer + dir])
-        canvasChanged()
-      state.selectedLayer += dir
+
+    if dir != 0 and not shiftDown():
+      tryMoveLayer(dir, ctrlDown())
 
     if keySpace.tapped: addNewLayer()
-    if keyDelete.tapped and state.layers.len > 1:
-      state.layers.delete(state.selectedLayer)
-      state.selectedLayer = clamp(state.selectedLayer, 0, state.layers.len - 1)
-
-      canvasChanged()
+    if keyDelete.tapped and state.layers.len > 1: tryDeleteLayer()
     
     let moveAxis = axisTap2(keyLeft, keyRight, keyDown, keyUp).vec2i
     if shiftDown() and moveAxis != vec2i():
@@ -318,6 +326,20 @@ proc doUi =
         postCallback:
           igOpenPopup("Resize")
         
+      igEndMenu()
+    
+    if igBeginMenu("Layer"):
+      igBeginDisabled(state.layers.len <= 1)
+      if igMenuItem("Delete Layer", shortcut = "Del"): tryDeleteLayer()
+      igEndDisabled()
+
+      if igMenuItem("New Layer", shortcut = "Space"): addNewLayer()
+
+      igBeginDisabled(state.layers.len <= 1)
+      if igMenuItem("Shift Up", shortcut = "Ctrl+Up"): tryMoveLayer(1, true)
+      if igMenuItem("Shift Down", shortcut = "Ctrl+Down"): tryMoveLayer(-1, true)
+      igEndDisabled()
+
       igEndMenu()
 
     igEndMainMenuBar()
