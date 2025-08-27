@@ -1,0 +1,12 @@
+build/
+android/build/
+android/.externalNativeBuild/
+android/.idea/
+android/.gradle/
+android/src/
+assets/atlas.dat
+assets/atlas.png
+android/local.properties
+.idea/
+*.png~
+.DS_Store
