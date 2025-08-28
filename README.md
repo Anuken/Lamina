@@ -2,6 +2,10 @@
 
 A simple grid-based editor for making vector icons. Used for Mindustry sector icons.
 
+## Downloads
+
+Download lamina-win64.exe at the [Releases](https://github.com/Anuken/Lamina/releases) page. Only Windows builds are provided. 
+
 ## Hotkeys
 
 - `Left Mouse`: paint
@@ -15,7 +19,6 @@ A simple grid-based editor for making vector icons. Used for Mindustry sector ic
 - `1-9`: jump to layer
 - `Ctrl+Z`: undo
 - `Ctrl+Shift+Z`: redo
-
 
 ## Compiling (Linux/Mac only)
 
