@@ -2,6 +2,8 @@
 
 A simple grid-based editor for making vector-styled images. Used for Mindustry sector icons.
 
+![](screenshot.png)
+
 ## Downloads
 
 Download `lamina-win64.exe` at the [Releases](https://github.com/Anuken/Lamina/releases) page. Only Windows builds are provided. 
