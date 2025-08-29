@@ -12,7 +12,6 @@ when defined(nimsuggest) and not defined(nimscript): import system/nimscript exc
 
 --d:noAudio
 --d:noRecorder
---d:debugVarEdit
 
 #skips annoying errors in polymorph (I want to clear other systems!)
 --d:ecsPermissive

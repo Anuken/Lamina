@@ -10,3 +10,5 @@ android/local.properties
 .idea/
 *.png~
 .DS_Store
+nimble.develop
+nimble.paths
